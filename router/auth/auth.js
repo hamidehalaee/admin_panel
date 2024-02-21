@@ -24,12 +24,12 @@ router.post(
         }
     }
 )
-function example() {
-    return condition1 ? value1
-      : condition2 ? value2
-      : condition3 ? value3
-      : value4;
-  }
+// function example() {
+//     return condition1 ? value1
+//       : condition2 ? value2
+//       : condition3 ? value3
+//       : value4;
+//   }
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
