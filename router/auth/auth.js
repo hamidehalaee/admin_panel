@@ -24,21 +24,24 @@ router.post(
         }
     }
 )
-
+function example() {
+    return condition1 ? value1
+      : condition2 ? value2
+      : condition3 ? value3
+      : value4;
+  }
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
     const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid password.' });
-    }
-    if(user.blocked){
-        return res.status(404).json({ message: 'User has been blocked.' });
-    }
-    res.json({ message: 'Login successful' });
+
+    return  (!user) ? (res.status(404).json({ message: 'User not found.' }))
+        : 
+            (!passwordMatch) ? (res.status(401).json({ message: 'Invalid password.' }))
+        :   
+            (user.blocked) ? (res.status(404).json({ message: 'User has been blocked.' }))
+        :  
+             res.json({ message: 'Login successful' });
   });
 
 module.exports = router
